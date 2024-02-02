@@ -1,24 +1,69 @@
 const db = require('./db/connection');
 const axios = require('axios');
 
-const createClient = () => {
-    axios.get('https://randomuser.me/api/')
-        .then((response) => {
-            const { name } = response.data.results[0];
-            const sql = `INSERT INTO clients (name,last_name, created_at) VALUES ('${name.first}','${name.last}', '2024-02-01 19:07:41')`;
+const pets = [
+    "perro",
+    "gato",
+    "pajaro",
+]
+
+const razaperro=[
+    "Pastor Aleman",
+    "Labrador",
+    "Pitbull",
+    "Chihuahua",
+]
+const razagato=[
+    "Siames",
+    "Persa",
+    "Bengala",
+]
+
+const razapajaro=[
+    "Canario",
+    "Perico",
+    "Loro",
+]
+const nombresmascotas=[
+    "Firulais",
+    "Mimi",
+    "Piolin",
+    "Rocky",
+    "Toby",
+    "Luna",
+    "Max",
+    "Coco",
+    "Simba",
+    "Milo",
+    "Lola",
+    "Bella",    
+]
+
+const CreatePet = () => {
+            var  name = nombresmascotas[Math.floor(Math.random() * nombresmascotas.length)];
+            var raza
+            var pet = pets[Math.floor(Math.random() * pets.length)];
+            if(pet=="perro"){
+                raza=razaperro[Math.floor(Math.random() * razaperro.length)];
+            }
+            if(pet=="gato"){
+                raza=razagato[Math.floor(Math.random() * razagato.length)];
+            }
+            if(pet=="pajaro"){
+                raza=razapajaro[Math.floor(Math.random() * razapajaro.length)];
+            }
+            var num1al10=Math.floor(Math.random() * 10);
+            const sql = `INSERT INTO practica1.pets (name, type, breed, owner_id) VALUES ('${name}', '${pet}', '${raza}', '${num1al10}');`;
             db.query(sql, (err, result) => {
                 if (err) throw err;
-                console.log('Cliente creado!');
-                /*const sql = `INSERT INTO logs (description, time_stamp) VALUES ('Cliente creado', NOW())`;
+                console.log('Mascota creada!');
+               /* const sql = `INSERT INTO logs (description, time_stamp) VALUES ('Mascota creado', NOW())`;
                 db.query(sql, (err, result) => {
                     if (err) throw err;
                     console.log('Log creado!');
                 });*/
             });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+
 }
 
-setInterval(createClient,5000);
+setInterval(CreatePet,2000);
